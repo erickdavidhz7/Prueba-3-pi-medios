@@ -3,12 +3,15 @@ import cors from 'cors'
 import http from 'node:http'
 import routes from './routes/router'
 import { corsOptions, envs } from './utils/constants'
+import { initDb } from './utils/database'
 
 
 const app = express()
 
 app.use(express.json())
 app.use(cors(corsOptions))
+
+initDb()
 
 app.use('/', routes)
 
