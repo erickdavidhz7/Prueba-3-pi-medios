@@ -15,8 +15,8 @@ export const Users = db.define(
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
     },
-    last_Name: {
-      type: DataTypes.STRING,
+    last_name: {
+      type: DataTypes.STRING(30),
       allowNull: false,
       field: 'last_name',
     },
@@ -24,6 +24,10 @@ export const Users = db.define(
       type: DataTypes.STRING(30),
       allowNull: false,
       field: 'name',
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
   },
   {

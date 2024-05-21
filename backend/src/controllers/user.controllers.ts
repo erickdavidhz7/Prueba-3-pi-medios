@@ -1,12 +1,29 @@
 import userServices from '../services/users.services'
 import { Request, Response } from 'express'
+import { signToken } from '../utils/jwt.util'
+import UserI from '../interfaces/user.interface'
 
 const UsersControllers = {
   createUser: async (req: Request, res: Response) => {
     try {
       const userData = req.body
-      const newUser = await userServices.createUsers(userData)
-      return res.status(201).json(newUser)
+      const newUser = (await userServices.createUsers(
+        userData
+      )) as unknown as UserI
+      if (!newUser.id)
+        return res
+          .status(500)
+          .json({ ok: false, message: 'Internal server error' })
+      const payload = { document: newUser.document, id: newUser.id }
+      return res
+        .status(201)
+        .json({
+          document: newUser.document,
+          id: newUser.id,
+          last_name: newUser.last_name,
+          name: newUser.name,
+          token: signToken(payload),
+        })
     } catch (error) {
       res.status(500).json({ ok: false, message: 'Internal server error' })
     }

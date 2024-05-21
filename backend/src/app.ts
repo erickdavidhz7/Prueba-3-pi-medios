@@ -5,7 +5,7 @@ import routes from './routes/router'
 import { corsOptions, envs } from './utils/constants'
 import { initDb } from './utils/database'
 import { initModels } from './models/initModels'
-import preloadData from './utils/preloadData'
+import { preloadDataProducts, preloadDataRoles} from './utils/preloadData'
 
 const app = express()
 
@@ -14,7 +14,8 @@ app.use(cors(corsOptions))
 
 initDb()
 initModels()
-preloadData()
+preloadDataProducts()
+preloadDataRoles()
 
 app.use('/', routes)
 

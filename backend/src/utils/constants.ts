@@ -26,3 +26,15 @@ export const envs = {
     DB_PORT: get('DB_PORT').required().asString(),
   },
 }
+
+export const rolesArray = [
+  { id: '1c9f38a5-1c4f-4028-b3fa-890e9b3b0fe7', name: 'admin' },
+  { id: '05b1bb13-ff7c-4c0c-9892-585a78b4fd38', name: 'employee' },
+  { id: '0e16a149-7887-4367-970d-a744187bfd41', name: 'everyone' },
+]
+
+export enum RolesId {
+  admin = '1c9f38a5-1c4f-4028-b3fa-890e9b3b0fe7',
+  employee = '05b1bb13-ff7c-4c0c-9892-585a78b4fd38',
+  everyone = '0e16a149-7887-4367-970d-a744187bfd41',
+}

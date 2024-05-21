@@ -1,5 +1,6 @@
 import UserI from '../interfaces/user.interface'
 import { Users } from '../models/user.model'
+import { RolesId } from '../utils/constants'
 import { hashPassword } from '../utils/crypto'
 
 const userServices = {
@@ -13,6 +14,7 @@ const userServices = {
         last_name: user.last_name,
         name: user.name,
         password: hashPassword(user.password),
+        roles_id: RolesId.everyone
       })
       return newUser
     } catch (error) {
