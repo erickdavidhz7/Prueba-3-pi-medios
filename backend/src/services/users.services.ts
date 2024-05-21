@@ -12,7 +12,7 @@ const userServices = {
         document: user.document,
         last_name: user.last_name,
         name: user.name,
-        password: hashPassword(user.password)
+        password: hashPassword(user.password),
       })
       return newUser
     } catch (error) {
