@@ -1,16 +1,18 @@
 import UserI from '../interfaces/user.interface'
 import { Users } from '../models/user.model'
+import { hashPassword } from '../utils/crypto'
 
 const userServices = {
   createUsers: async (user: UserI) => {
     try {
-      if (!user.document || !user.last_name || !user.name) {
+      if (!user.document || !user.last_name || !user.name || !user.password) {
         throw new Error('Missing Data')
       }
       const newUser = await Users.create({
         document: user.document,
         last_name: user.last_name,
         name: user.name,
+        password: hashPassword(user.password)
       })
       return newUser
     } catch (error) {
@@ -51,6 +53,7 @@ const userServices = {
     try {
       const userToUpdate = await Users.findByPk(id)
       if (!userToUpdate) throw new Error('Error searching the user')
+      // TODO: Do the change by using the role table
       userToUpdate.update({ roles_id: role })
     } catch (error) {
       throw new Error(`Error changing the user's role`)

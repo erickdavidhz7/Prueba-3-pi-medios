@@ -3,6 +3,7 @@ interface UserI {
   id?: string
   last_name: string
   name: string
+  password?: string
   roles_id?: string
 }
 
