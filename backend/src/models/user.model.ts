@@ -21,6 +21,6 @@ export const Users = db.define('users', {
   name: {
     type: DataTypes.STRING(30),
     allowNull: false,
-    field: 'first_name',
+    field: 'name',
   }
 })
