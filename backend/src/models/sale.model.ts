@@ -1,15 +1,19 @@
 import { DataTypes } from 'sequelize'
 import { db } from '../utils/database'
 
-export const Roles = db.define('roles', {
+export const Sales = db.define('sales', {
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
     allowNull: false,
     defaultValue: DataTypes.UUIDV4,
   },
-  name: {
+  qty: {
     type: DataTypes.STRING(30),
+    allowNull: false
+  },
+  sale_at: {
+    type: DataTypes.TIME,
     allowNull: false
   }
 })

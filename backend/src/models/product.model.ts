@@ -1,7 +1,11 @@
 import { DataTypes } from 'sequelize'
 import { db } from '../utils/database'
 
-export const Roles = db.define('roles', {
+export const Products = db.define('products', {
+  description: {
+    type: DataTypes.STRING(30),
+    allowNull: false,
+  },
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
@@ -10,6 +14,10 @@ export const Roles = db.define('roles', {
   },
   name: {
     type: DataTypes.STRING(30),
-    allowNull: false
-  }
+    allowNull: false,
+  },
+  price: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
 })

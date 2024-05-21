@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize'
 import { db } from '../utils/database'
 
-export const Users = db.define('Users', {
+export const Users = db.define('users', {
   document: {
     type: DataTypes.STRING(20),
     allowNull: false,
