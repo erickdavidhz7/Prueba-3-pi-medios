@@ -15,7 +15,7 @@ const userServices = {
       return newUser
     } catch (error) {
       console.log(error)
-      throw new Error(error as string)
+      throw new Error('Unable to create user')
     }
   },
   getAllUsers: async () => {
@@ -26,20 +26,18 @@ const userServices = {
       throw new Error('Unable to search users')
     }
   },
-  findUserById: async (id: string) => {
+  findUserByDocument: async (document: string) => {
     try {
       const userId = await Users.findOne({
         where: {
-          id,
+          document,
         },
       })
-
       return userId
     } catch (error) {
       throw new Error('Error searching the user')
     }
   },
-
   updateUser: async (id: string, data: Partial<UserI>) => {
     try {
       const userToUpdate = await Users.findByPk(id)
