@@ -1,9 +1,9 @@
 import dotenv from 'dotenv'
-import {get} from 'env-var'
+import { get } from 'env-var'
 import { CorsOptions } from 'cors'
 dotenv.config()
 
-export const corsOptions : CorsOptions = {
+export const corsOptions: CorsOptions = {
   origin: '*',
   credentials: true,
   allowedHeaders: ['Origin, X-Requested-With, Content-Type, Accept'],
