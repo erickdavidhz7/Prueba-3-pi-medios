@@ -59,6 +59,16 @@ const userServices = {
       throw new Error(`Error changing the user's role`)
     }
   },
+  deleteUser: async (id: string) => {
+    try {
+      const userToDelete = await Users.destroy({
+        where: { id },
+      })
+      if (!userToDelete) throw new Error('Error searching the user to delete')
+    } catch (error) {
+      throw new Error(`Error trying to delete the user`)
+    }
+  },
 }
 
 export default userServices

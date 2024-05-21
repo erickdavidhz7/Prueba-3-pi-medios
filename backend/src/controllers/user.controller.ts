@@ -57,5 +57,14 @@ const UsersControllers = {
       res.status(500).json({ ok: false, message: 'Internal server error' })
     }
   },
+  deleteUser: async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params
+      const userToDelete = await userServices.deleteUser(id)
+      res.status(200).json(userToDelete)
+    } catch (error) {
+      res.status(500).json({ ok: false, message: 'Internal server error' })
+    }
+  },
 }
 export default UsersControllers

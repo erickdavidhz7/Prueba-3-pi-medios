@@ -1,4 +1,5 @@
 import express, { Request, Response} from 'express'
+import usersRoutes from './user.routes'
 
 const mainRouter = express.Router();
 
@@ -11,5 +12,7 @@ mainRouter.get('/', (_req: Request, res: Response) => {
   <P>Architecture Defined</p>
  `)
 })
+
+mainRouter.use('/users', usersRoutes)
 
 export default mainRouter
