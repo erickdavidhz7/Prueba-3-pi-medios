@@ -15,7 +15,7 @@ export const Sales = db.define(
       allowNull: false,
     },
     sale_at: {
-      type: DataTypes.TIME,
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
     products_id: {

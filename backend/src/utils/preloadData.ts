@@ -48,13 +48,13 @@ const preLoadData = {
       const validateBulk = await Users.findOne({ where: { id: adminData.id } })
 
       if (validateBulk) {
-        console.log('Data of roles is already inside the database')
+        console.log('Data of admin is already inside the database')
         return
       }
       await Users.bulkCreate([adminData])
       console.log('Database has loaded the data of an admin succesfully')
     } catch (error) {
-      console.log('Data of roles is already inside the database')
+      console.log('Data of admin is already inside the database')
     }
   },
 }

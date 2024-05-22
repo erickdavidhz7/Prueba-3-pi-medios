@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import saleServices from '../services/sale.services'
 import SaleI from '../interfaces/sale.interface'
 import getErrorMessage from '../utils/get-error-message'
+import getMonthAndYearFromDate from '../utils/get-month-year'
 
 const SaleControllers = {
   createSale: async (req: Request, res: Response) => {
@@ -58,5 +59,28 @@ const SaleControllers = {
       res.status(500).json({ ok: false, message: 'Internal server error', error: getErrorMessage(error) })
     }
   },
+  getTotalSalesOfDay : async (req: Request, res: Response) => {
+    try {
+      const { date } = req.query 
+      if(!date) res.status(400).send('Date query parameter is required')
+      const sales = await saleServices.getAllSalesOfDay(date) as unknown as SaleI[]
+      const totalSales = await saleServices.getTotalSales(sales)
+      res.status(200).json({ok: true, message: `Total sales of ${date} are: ${totalSales}`})
+    } catch (error) {
+      res.status(500).json({ ok: false, message: 'Internal server error', error: getErrorMessage(error) })
+    }
+  },
+  getTotalSalesOfMonth : async(req: Request, res: Response) => {
+    try {
+      const { date } = req.query
+      const {month, year} = getMonthAndYearFromDate(date as string)
+      if(!date) res.status(400).send('Date query parameter is required')
+      const sales = await saleServices.getAllSalesOfMonth(date) as unknown as SaleI[]
+      const totalSales = await saleServices.getTotalSales(sales)
+      res.status(200).json({ok: true, message: `Total sales of ${month} ${year} are: ${totalSales}`})
+    } catch (error) {
+      res.status(500).json({ ok: false, message: 'Internal server error', error: getErrorMessage(error) })
+    }
+  }
 }
 export default SaleControllers

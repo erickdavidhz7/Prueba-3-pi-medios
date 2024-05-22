@@ -42,6 +42,15 @@ const productServices = {
       throw error
     }
   },
+  getPrice: async(id: string) => {
+    try {
+      const product = await Products.findByPk(id) as unknown as ProductI
+      const price = product.price
+      return price
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 export default productServices

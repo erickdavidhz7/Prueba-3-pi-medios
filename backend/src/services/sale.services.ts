@@ -1,5 +1,8 @@
 import SaleI from '../interfaces/sale.interface'
 import { Sales } from '../models/sale.model'
+import { Op } from 'sequelize'
+import productServices from './product.services'
+import getTotalPriceWithQty from '../utils/calculate-total-price'
 
 const saleServices = {
   createSale: async (sale: SaleI) => {
@@ -9,10 +12,10 @@ const saleServices = {
       }
       const date = new Date()
       const newSale = await Sales.create({
-        products_id : sale.products_id,
+        products_id: sale.products_id,
         qty: sale.qty,
-        sale_at: date.toLocaleString(),
-        users_id : sale.users_id
+        sale_at: date,
+        users_id: sale.users_id,
       })
       return newSale
     } catch (error) {
@@ -57,6 +60,63 @@ const saleServices = {
       throw error
     }
   },
+  getAllSalesOfDay: async (date: string | any) => {
+    try {
+      if (!date) {
+        throw new Error('Missing Data')
+      }
+      const convertedDate = typeof date === 'string' ? new Date(date) : date
+      convertedDate.setHours(0, 0, 0, 0)
+      const sales = await Sales.findAll({
+        where: {
+          sale_at: {
+            [Op.eq]: convertedDate,
+          },
+        },
+      })
+
+      return sales
+    } catch (error) {
+      throw error
+    }
+  },
+  getTotalSales: async (sales: SaleI[]) : Promise<number> => {
+    try {
+      const pricePromises = sales.map(async (sale) => {
+        return await productServices.getPrice(sale.products_id)
+      })
+      const priceArray = await Promise.all(pricePromises)
+      const quantityArray = sales.map((sale) => sale.qty)
+      const totalSales = getTotalPriceWithQty(priceArray, quantityArray)
+      return totalSales
+    } catch (error) {
+      throw error
+    }
+  },
+  getAllSalesOfMonth: async (date: string | any) => {
+    try {
+      if (!date) {
+        throw new Error('Missing Data')
+      }
+      const dateFormatted = new Date(date)
+      const year = dateFormatted.getFullYear()
+      const month = dateFormatted.getMonth() + 1
+
+      const startDate = new Date(year, month - 1, 1)
+      const endDate = new Date(year, month, 0)
+
+      const sales = await Sales.findAll({
+        where: {
+          sale_at: {
+            [Op.between]: [startDate, endDate],
+          },
+        },
+      })
+      return sales
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 export default saleServices
