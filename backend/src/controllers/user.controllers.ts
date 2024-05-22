@@ -78,7 +78,7 @@ const UserControllers = {
   deleteUser: async (req: Request, res: Response) => {
     try {
       const { id } = req.params
-      const userToDelete = await userServices.deleteUser(id)
+      await userServices.deleteUser(id)
       res.status(200).json({ok: true, message: "User has been deleted"})
     } catch (error) {
       res.status(500).json({ ok: false, message: 'Internal server error', error: getErrorMessage(error) })
