@@ -20,8 +20,7 @@ const userServices = {
       })
       return newUser
     } catch (error) {
-      console.log(error)
-      throw new Error('Unable to create user')
+      throw error
     }
   },
   getAllUsers: async () => {
@@ -34,12 +33,12 @@ const userServices = {
   },
   findUserByDocument: async (document: string) => {
     try {
-      const userId = await Users.findOne({
+      const user = await Users.findOne({
         where: {
           document,
         },
       })
-      return userId
+      return user
     } catch (error) {
       throw new Error('Error searching the user')
     }
@@ -51,7 +50,7 @@ const userServices = {
       userToUpdate.update(data)
       return userToUpdate
     } catch (error) {
-      throw new Error('Error updating the user')
+      throw error
     }
   },
   changeUserRole: async (id: string, role: string) => {
@@ -68,7 +67,7 @@ const userServices = {
       userToUpdate.update({ roles_id: newRole.id })
       return userToUpdate
     } catch (error) {
-      throw new Error(`Error changing the user's role`)
+      throw error
     }
   },
   deleteUser: async (id: string) => {
@@ -79,7 +78,7 @@ const userServices = {
       if (!userToDelete) throw new Error('Error searching the user to delete')
       return userToDelete
     } catch (error) {
-      throw new Error(`Error trying to delete the user`)
+      throw error
     }
   },
 }
