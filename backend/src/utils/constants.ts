@@ -27,6 +27,7 @@ export const envs = {
   },
 }
 
+// Default Roles
 export const rolesArray = [
   { id: '1c9f38a5-1c4f-4028-b3fa-890e9b3b0fe7', name: 'admin' },
   { id: '05b1bb13-ff7c-4c0c-9892-585a78b4fd38', name: 'employee' },

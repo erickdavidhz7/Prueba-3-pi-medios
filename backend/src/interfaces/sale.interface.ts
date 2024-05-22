@@ -1,8 +1,7 @@
 interface SaleI {
   id?: string
   qty: number
-  name: string
-  sale_at: Date
+  sale_at?: Date
   products_id?: string
   users_id?: string
 }

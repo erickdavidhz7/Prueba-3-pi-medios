@@ -6,6 +6,6 @@ import { tokenValidator, checkAdminRole } from '../middlewares/auth.middlewares'
 const router = express.Router()
 
 router.post('/', [checkAdminRole, tokenValidator], RoleControllers.CreateRole)
-router.patch('/:id', [checkAdminRole, tokenValidator], UsersControllers.changeUserRole)
+router.patch('/:id', [checkAdminRole], UsersControllers.changeUserRole)
 
 export default router

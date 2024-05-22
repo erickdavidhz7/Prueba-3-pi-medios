@@ -18,6 +18,22 @@ export const Sales = db.define(
       type: DataTypes.TIME,
       allowNull: false,
     },
+    products_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: {
+        model: 'products',
+        key: 'id',
+      },
+    },
+    users_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id',
+      },
+    },
   },
   {
     timestamps: false,
