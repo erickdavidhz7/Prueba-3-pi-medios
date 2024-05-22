@@ -81,6 +81,15 @@ const userServices = {
       throw error
     }
   },
+  getRoleId : async(id: string) => {
+    try {
+      const user = await Users.findByPk(id) as unknown as UserI
+      if(!user) throw new Error('Error searching the user')
+      return user.roles_id
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 export default userServices

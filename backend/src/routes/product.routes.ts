@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.get('/', ProductControllers.getAllProducts)
 router.get('/:id', ProductControllers.getProductById)
-router.post('/', [checkAdminRole, tokenValidator], ProductControllers.createProduct)
+router.post('/', [checkAdminRole], ProductControllers.createProduct)
 router.patch('/:id', ProductControllers.updateProduct)
 
 export default router

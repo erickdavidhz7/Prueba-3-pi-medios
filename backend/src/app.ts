@@ -1,11 +1,12 @@
 import express from 'express'
 import cors from 'cors'
 import http from 'node:http'
+import swaggerUi from 'swagger-ui-express'
 import routes from './routes/router'
 import { corsOptions, envs } from './utils/constants'
 import { initDb } from './utils/database'
 import { initModels } from './models/initModels'
-import { preloadDataProducts, preloadDataRoles} from './utils/preloadData'
+import preLoadData from './utils/preloadData'
 
 const app = express()
 
@@ -14,8 +15,9 @@ app.use(cors(corsOptions))
 
 initDb()
 initModels()
-preloadDataProducts()
-preloadDataRoles()
+preLoadData.preloadDataAdmin()
+preLoadData.preloadDataProducts()
+preLoadData.preloadDataRoles()
 
 app.use('/', routes)
 

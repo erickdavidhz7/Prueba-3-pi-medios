@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express'
 import { verifyToken } from '../utils/jwt.util'
-import { Users } from '../models/user.model' // Assuming Users is the model
-import { RolesId } from '../utils/constants' // Assuming RolesId is a type or enum
+import { Users } from '../models/user.model'
+import { RolesId } from '../utils/constants' 
 import { JwtPayload } from 'jsonwebtoken'
+import userServices from '../services/users.services'
 
 export const tokenValidator = async (
   req: Request,
@@ -55,8 +56,9 @@ export const checkAdminRole = async (
   next: NextFunction
 ) => {
   try {
-    const userRole = req.headers.auth
-    if (userRole != RolesId.admin)
+    const userId = req.headers.auth as string
+    const userRoleId = await userServices.getRoleId(userId)
+    if (userRoleId != RolesId.admin)
       return res
         .status(401)
         .json({ ok: false, message: 'You are not authorized' })
@@ -75,8 +77,9 @@ export const checkEmployeeRole = async (
   next: NextFunction
 ) => {
   try {
-    const userRole = req.headers.auth
-    if (userRole != RolesId.employee)
+    const userId = req.headers.auth as string
+    const userRoleId = await userServices.getRoleId(userId)
+    if (userRoleId != RolesId.employee)
       return res
         .status(401)
         .json({ ok: false, message: 'You are not authorized' })
@@ -95,8 +98,9 @@ export const checkEveryoneRole = async (
   next: NextFunction
 ) => {
   try {
-    const userRole = req.headers.auth
-    if (userRole != RolesId.everyone)
+    const userId = req.headers.auth as string
+    const userRoleId = await userServices.getRoleId(userId)
+    if (userRoleId != RolesId.everyone)
       return res
         .status(401)
         .json({ ok: false, message: 'You are not authorized' })

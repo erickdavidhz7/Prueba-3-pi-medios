@@ -39,3 +39,12 @@ export enum RolesId {
   employee = '05b1bb13-ff7c-4c0c-9892-585a78b4fd38',
   everyone = '0e16a149-7887-4367-970d-a744187bfd41',
 }
+
+export const adminData = {
+  id: "90ca5dfb-8038-4c40-b911-2c11141d258a",
+  document: 'ADMIN',
+  last_name: 'ADMIN',
+  name: 'ADMIN',
+  password: 'ADMIN_DANIELA_STORE_123',
+  roles_id: '1c9f38a5-1c4f-4028-b3fa-890e9b3b0fe7',
+}
