@@ -1,7 +1,9 @@
+import RoleI from '../interfaces/role.interface'
 import UserI from '../interfaces/user.interface'
 import { Users } from '../models/user.model'
 import { RolesId } from '../utils/constants'
 import { hashPassword } from '../utils/crypto'
+import { getAllRoles} from './role.services'
 
 const userServices = {
   createUsers: async (user: UserI) => {
@@ -54,24 +56,16 @@ const userServices = {
   },
   changeUserRole: async (id: string, role: string) => {
     try {
-      const roleMapping: { [key: string]: string } = {
-        admin: RolesId.admin,
-        employee: RolesId.employee,
-        everyone: RolesId.everyone,
-      }
-
       const userToUpdate = await Users.findByPk(id)
       if (!userToUpdate) {
         throw new Error('Error searching the user')
       }
-
-      const newRole = roleMapping[role]
-      console.log(newRole)
+      const arrayRoles: RoleI[] = await getAllRoles()
+      const newRole = arrayRoles.find(r => role == r.name)
       if (!newRole) {
         throw new Error('Invalid role')
       }
-
-      userToUpdate.update({ roles_id: newRole })
+      userToUpdate.update({ roles_id: newRole.id })
       return userToUpdate
     } catch (error) {
       throw new Error(`Error changing the user's role`)

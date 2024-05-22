@@ -21,7 +21,6 @@ export const verifyToken = (token: string) => {
     const data = jwt.verify(token, envs.jwt.JWT_SECRET, verifyOptions)
     return data as jwt.JwtPayload
   } catch (error) {
-    console.log(error)
     throw error
   }
 }

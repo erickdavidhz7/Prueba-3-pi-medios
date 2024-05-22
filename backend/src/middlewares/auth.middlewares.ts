@@ -1,21 +1,27 @@
 import { NextFunction, Request, Response } from 'express'
 import { verifyToken } from '../utils/jwt.util'
-import { Users } from '../models/user.model'
-import { RolesId } from '../utils/constants'
+import { Users } from '../models/user.model' // Assuming Users is the model
+import { RolesId } from '../utils/constants' // Assuming RolesId is a type or enum
+import { JwtPayload } from 'jsonwebtoken'
 
 export const tokenValidator = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.headers['x-authorization']
+  const token = req.headers['x-authorization'] as string
 
-  if (!token)
+  interface CustomRequest extends Request {
+    token: JwtPayload
+  }
+
+  if (!token) {
     return res.status(401).json({ ok: false, message: 'Token not found' })
+  }
 
   try {
-    const decoded = verifyToken(token as string)
-    req.user = decoded
+    const decoded = verifyToken(token) as JwtPayload
+    (req as CustomRequest).token = decoded
     next()
   } catch (error) {
     return res.status(403).json({ ok: false, message: 'Invalid token' })

@@ -5,6 +5,6 @@ import { uniqueDocumentValidator, tokenValidator, checkAdminRole } from '../midd
 const router = express.Router()
 
 router.post('/login', AuthControllers.loginUser)
-router.post('/register', [checkAdminRole, uniqueDocumentValidator], UsersControllers.createUser)
+router.post('/register', [checkAdminRole, tokenValidator, uniqueDocumentValidator], UsersControllers.createUser)
 
 export default router

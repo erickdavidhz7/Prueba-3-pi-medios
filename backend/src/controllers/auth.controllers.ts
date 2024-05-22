@@ -7,7 +7,6 @@ const AuthControllers = {
       const { document, password } = req.body
       if (!document || !password)
         return res.status(404).json({ ok: false, message: 'Missing Data' })
-
       const userData = await loginUser(document, password)
 
       if (userData) return res.status(200).json({ ok: true, ...userData })
