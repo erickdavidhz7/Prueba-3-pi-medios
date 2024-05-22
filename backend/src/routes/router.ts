@@ -3,6 +3,7 @@ import usersRoutes from './user.routes'
 import authRoutes from './auth.routes'
 import roleRoutes from './role.routes'
 import productRoutes from './product.routes'
+import saleRoutes from './sale.routes'
 
 const mainRouter = express.Router()
 
@@ -20,5 +21,6 @@ mainRouter.use('/auth', authRoutes)
 mainRouter.use('/users', usersRoutes)
 mainRouter.use('/roles', roleRoutes)
 mainRouter.use('/products', productRoutes)
+mainRouter.use('/sales', saleRoutes)
 
 export default mainRouter
