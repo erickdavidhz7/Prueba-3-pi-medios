@@ -14,7 +14,7 @@
 3. **Run the server with npm run dev (development) or npm start (production)**
 
 ## APIDOCS
-1. **All the respective documentation it is on the api-docs endpoint done with swaggerui**
+1. **All the respective documentation it is on the /api-docs endpoint done with swaggerui**
 2. **The PORT would be a environment variable that has to be filled on the respective .env file of the project**
 3. **There is an env.example file to have a reference of what environment variables are needed for the project, they can also be seen in the constants.ts file inside the utils directory**
 
