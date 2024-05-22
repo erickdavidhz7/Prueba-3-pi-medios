@@ -7,6 +7,7 @@ import { corsOptions, envs } from './utils/constants'
 import { initDb } from './utils/database'
 import { initModels } from './models/initModels'
 import preLoadData from './utils/preloadData'
+import openApiSpec from '../openapiDoc/openapi.json'
 
 const app = express()
 
@@ -20,6 +21,7 @@ preLoadData.preloadDataProducts()
 preLoadData.preloadDataRoles()
 
 app.use('/', routes)
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiSpec))
 
 http.createServer(app).listen(envs.PORT, () => {
   console.log(`Server is listening at http://${envs.APP_DOMAIN}:${envs.PORT}/`)

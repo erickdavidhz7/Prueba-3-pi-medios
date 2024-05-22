@@ -20,6 +20,7 @@ export const loginUser = async (document: string, password: string) => {
     if (verifyPassword) {
       return {
         token,
+        id: user.dataValues.id,
         document: user.dataValues.document,
         name: user.dataValues.name,
         last_name: user.dataValues.last_name,

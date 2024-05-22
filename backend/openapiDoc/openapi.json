@@ -1,0 +1,241 @@
+{
+  "openapi": "3.1.0",
+  "info": { "title": "Daniela Store Site", "version": "1.0.0" },
+  "servers": [
+    {
+      "url": "https://localhost:3100",
+      "description": "Local host API server"
+    }
+  ],
+  "tags": [
+    { "name": "Auth" },
+    { "name": "Users" },
+    { "name": "Roles" },
+    { "name": "Products" },
+    { "name": "Sales" }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Register an user",
+        "requestBody": {
+          "description": "Create a new user.",
+          "content": {
+            "multipart/form-data": {
+              "schema": { "$ref": "#/components/schemas/UserRegister" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "User data.",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "A JSON with two properties ok and message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MiddlewareResponseMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User sign in",
+        "requestBody": {
+          "description": "User signing in",
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UserLogin" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in and token.",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Returns a list of all users (ADMIN ONLY)", 
+        "responses": {
+          "200": {
+            "description": "A JSON array of users. The image is a link from cloudinary."
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": { "type": "string" },
+          "required": true
+        }
+      ],
+      "get": {
+        "tags": ["Users"],
+        "summary": "Returns a user with the data.",
+        "responses": {
+          "200": { "description": "A JSON of a user." },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Updating an user",
+        "requestBody": {
+          "description": "Updates the information from an user.",
+          "content": {
+            "aplication/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateUser" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "A JSON with all the fields of the new provider created"
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": { "type": "string" },
+            "required": true
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "MiddlewareResponseMessage": {
+        "Type": "object",
+        "properties": {
+          "ok": { "type": "boolean", "example": "false" },
+          "message": { "type": "string", "example": "general message" }
+        }
+      },
+      "GeneralResponseError": {
+        "Type": "object",
+        "properties": {
+          "ok": { "type": "boolean", "example": "false" },
+          "message": { "type": "string", "example": "general message" },
+          "error": { "type": "string", "example": "error message" }
+        }
+      },
+      "UserLogin": {
+        "required": ["document", "password"],
+        "type": "object",
+        "properties": {
+          "document": { "type": "string", "example": "12345678" },
+          "password": { "type": "string", "example": "password" }
+        }
+      },
+      "UserRegister": {
+        "required": ["document", "last_name", "name", "password"],
+        "type": "object",
+        "properties": {
+          "document": { "type": "string", "example": "12345678" },
+          "last_name": { "type": "string", "example": "Picapiedras" },
+          "name": { "type": "string", "example": "Pedro" },
+          "password": { "type": "string", "example": "password" }
+        }
+      },
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "document": { "type": "string", "example": "12345678" },
+          "id": {
+            "type": "string",
+            "example": "9e7bd8a8-7045-4a52-b4f2-7b467229cbe9"
+          },
+          "last_name": { "type": "string", "example": "Picapiedras" },
+          "name": { "type": "string", "example": "Pedro" },
+          "password": { "type": "string", "example": "password_encrypted" },
+          "roles_id": {
+            "type": "string",
+            "example": "1c9f38a5-1c4f-4028-b3fa-890e9b3b0fe7"
+          }
+        }
+      }
+    }
+  }
+}
