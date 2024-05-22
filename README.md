@@ -20,4 +20,4 @@
 
 | TYPE   | DETAIL         | ROUTE                                  |
 | ------ | -------------- | -------------------------------------- | 
-| GET    | DOCUMENTATION  | http://localhost:PORT/api-docs         |                                                               
+| GET    | DOCUMENTATION  | http://localhost:PORT/api-docs         |
