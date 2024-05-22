@@ -3,7 +3,7 @@ import UserI from '../interfaces/user.interface'
 import { Users } from '../models/user.model'
 import { RolesId } from '../utils/constants'
 import { hashPassword } from '../utils/crypto'
-import { getAllRoles} from './role.services'
+import roleServices from './role.services'
 
 const userServices = {
   createUsers: async (user: UserI) => {
@@ -59,7 +59,7 @@ const userServices = {
       if (!userToUpdate) {
         throw new Error('Error searching the user')
       }
-      const arrayRoles: RoleI[] = await getAllRoles()
+      const arrayRoles: RoleI[] = await roleServices.getAllRoles()
       const newRole = arrayRoles.find(r => role == r.name)
       if (!newRole) {
         throw new Error('Invalid role')

@@ -4,7 +4,7 @@ import { signToken } from '../utils/jwt.util'
 import UserI from '../interfaces/user.interface'
 import getErrorMessage from '../utils/get-error-message'
 
-const UsersControllers = {
+const UserControllers = {
   createUser: async (req: Request, res: Response) => {
     try {
       const userData = req.body
@@ -25,7 +25,7 @@ const UsersControllers = {
           name: newUser.name,
           token: signToken(payload),
         })
-    } catch (error: any) {
+    } catch (error) {
       res.status(500).json({ ok: false, message: 'Internal server error', error: getErrorMessage(error) })
     }
   },
@@ -37,7 +37,7 @@ const UsersControllers = {
         res
           .status(400)
           .json({ ok: false, message: 'There are no users in the database' })
-    } catch (error: any) {
+    } catch (error) {
       res.status(500).json({ ok: false, message: 'Internal server error', error: getErrorMessage(error) })
     }
   },
@@ -51,7 +51,7 @@ const UsersControllers = {
           ok: false,
           message: 'There are no users with this document in the database',
         })
-    } catch (error: any) {
+    } catch (error) {
       res.status(500).json({ ok: false, message: 'Internal server error', error: getErrorMessage(error) })
     }
   },
@@ -61,7 +61,7 @@ const UsersControllers = {
       const data = req.body.role
       const userToUpdate = await userServices.changeUserRole(id, data)
       res.status(200).json(userToUpdate)
-    } catch (error: any) {
+    } catch (error) {
       res.status(500).json({ ok: false, message: 'Internal server error', error: getErrorMessage(error) })
     }
   },
@@ -71,7 +71,7 @@ const UsersControllers = {
       const data = req.body
       const userToUpdate = await userServices.updateUser(id, data)
       res.status(200).json(userToUpdate)
-    } catch (error: any) {
+    } catch (error) {
       res.status(500).json({ ok: false, message: 'Internal server error', error: getErrorMessage(error) })
     }
   },
@@ -80,9 +80,9 @@ const UsersControllers = {
       const { id } = req.params
       const userToDelete = await userServices.deleteUser(id)
       res.status(200).json({ok: true, message: "User has been deleted"})
-    } catch (error: any) {
+    } catch (error) {
       res.status(500).json({ ok: false, message: 'Internal server error', error: getErrorMessage(error) })
     }
   },
 }
-export default UsersControllers
+export default UserControllers
