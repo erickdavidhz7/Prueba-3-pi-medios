@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { loginUser } from '../services/auth.services'
+import getErrorMessage from '../utils/get-error-message'
 
 const AuthControllers = {
   loginUser: async (req: Request, res: Response) => {
@@ -11,8 +12,8 @@ const AuthControllers = {
 
       if (userData) return res.status(200).json({ ok: true, ...userData })
       else throw { status: 404, msg: 'Invalid Credentials' }
-    } catch (error: any) {
-      res.status(500).json({ ok: false, message: 'Internal server error', error: error.message })
+    } catch (error) {
+      res.status(500).json({ ok: false, message: 'Internal server error', error: getErrorMessage(error) })
     }
   },
 }
