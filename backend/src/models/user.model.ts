@@ -29,6 +29,14 @@ export const Users = db.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    roles_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: {
+        model: 'roles',
+        key: 'id',
+      },
+    },
   },
   {
     timestamps: false,

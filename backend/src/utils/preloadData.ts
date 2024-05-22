@@ -10,10 +10,10 @@ export const preloadDataProducts = async () => {
     const jsonData = await fs.readFile(dataPath, 'utf-8')
     const products = JSON.parse(jsonData)
 
-    const validateBulk = await Products.findOne({where: {id: products[0].id}
+    const validateBulk = await Products.findOne({
+      where: { id: products[0].id },
     })
-
-    if (!validateBulk){
+    if (validateBulk) {
       console.log('Data of products is already inside the database')
       return
     }
@@ -26,11 +26,11 @@ export const preloadDataProducts = async () => {
 
 export const preloadDataRoles = async () => {
   try {
-    
-    const validateBulk = await Roles.findOne({where: {id: rolesArray[0].id}
+    const validateBulk = await Roles.findOne({
+      where: { id: rolesArray[0].id },
     })
 
-    if (!validateBulk){
+    if (validateBulk) {
       console.log('Data of roles is already inside the database')
       return
     }
@@ -41,4 +41,3 @@ export const preloadDataRoles = async () => {
     console.log('Data of roles is already inside the database')
   }
 }
-

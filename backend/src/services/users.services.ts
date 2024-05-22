@@ -14,7 +14,7 @@ const userServices = {
         last_name: user.last_name,
         name: user.name,
         password: hashPassword(user.password),
-        roles_id: RolesId.everyone
+        roles_id: RolesId.everyone,
       })
       return newUser
     } catch (error) {
@@ -47,16 +47,32 @@ const userServices = {
       const userToUpdate = await Users.findByPk(id)
       if (!userToUpdate) throw new Error('Error searching the user')
       userToUpdate.update(data)
+      return userToUpdate
     } catch (error) {
       throw new Error('Error updating the user')
     }
   },
   changeUserRole: async (id: string, role: string) => {
     try {
+      const roleMapping: { [key: string]: string } = {
+        admin: RolesId.admin,
+        employee: RolesId.employee,
+        everyone: RolesId.everyone,
+      }
+
       const userToUpdate = await Users.findByPk(id)
-      if (!userToUpdate) throw new Error('Error searching the user')
-      // TODO: Do the change by using the role table
-      userToUpdate.update({ roles_id: role })
+      if (!userToUpdate) {
+        throw new Error('Error searching the user')
+      }
+
+      const newRole = roleMapping[role]
+      console.log(newRole)
+      if (!newRole) {
+        throw new Error('Invalid role')
+      }
+
+      userToUpdate.update({ roles_id: newRole })
+      return userToUpdate
     } catch (error) {
       throw new Error(`Error changing the user's role`)
     }
@@ -67,6 +83,7 @@ const userServices = {
         where: { id },
       })
       if (!userToDelete) throw new Error('Error searching the user to delete')
+      return userToDelete
     } catch (error) {
       throw new Error(`Error trying to delete the user`)
     }

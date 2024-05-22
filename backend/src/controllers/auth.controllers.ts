@@ -6,14 +6,14 @@ const AuthControllers = {
     try {
       const { document, password } = req.body
       if (!document || !password)
-        return res.status(400).json({ ok: false, message: 'Missing Data' })
+        return res.status(404).json({ ok: false, message: 'Missing Data' })
 
       const userData = await loginUser(document, password)
 
       if (userData) return res.status(200).json({ ok: true, ...userData })
-      else throw { status: 400, msg: 'Invalid Credentials' }
-    } catch (error) {
-      res.status(500).json({ ok: false, message: 'Internal server error' })
+      else throw { status: 404, msg: 'Invalid Credentials' }
+    } catch (error: any) {
+      res.status(500).json({ ok: false, message: 'Internal server error', error: error.message })
     }
   },
 }

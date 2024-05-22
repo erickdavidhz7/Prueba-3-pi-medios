@@ -24,8 +24,8 @@ const UsersControllers = {
           name: newUser.name,
           token: signToken(payload),
         })
-    } catch (error) {
-      res.status(500).json({ ok: false, message: 'Internal server error' })
+    } catch (error: any) {
+      res.status(500).json({ ok: false, message: 'Internal server error', error: error.message })
     }
   },
   getAllUsers: async (req: Request, res: Response) => {
@@ -36,8 +36,8 @@ const UsersControllers = {
         res
           .status(400)
           .json({ ok: false, message: 'There are no users in the database' })
-    } catch (error) {
-      res.status(500).json({ ok: false, message: 'Internal server error' })
+    } catch (error: any) {
+      res.status(500).json({ ok: false, message: 'Internal server error', error: error.message })
     }
   },
   findUserByDocument: async (req: Request, res: Response) => {
@@ -50,18 +50,18 @@ const UsersControllers = {
           ok: false,
           message: 'There are no users with this document in the database',
         })
-    } catch (error) {
-      res.status(500).json({ ok: false, message: 'Internal server error' })
+    } catch (error: any) {
+      res.status(500).json({ ok: false, message: 'Internal server error', error: error.message })
     }
   },
   changeUserRole: async (req: Request, res: Response) => {
     try {
       const { id } = req.params
-      const data = req.body
+      const data = req.body.role
       const userToUpdate = await userServices.changeUserRole(id, data)
       res.status(200).json(userToUpdate)
-    } catch (error) {
-      res.status(500).json({ ok: false, message: 'Internal server error' })
+    } catch (error: any) {
+      res.status(500).json({ ok: false, message: 'Internal server error', error: error.message })
     }
   },
   updateUser: async (req: Request, res: Response) => {
@@ -70,17 +70,17 @@ const UsersControllers = {
       const data = req.body
       const userToUpdate = await userServices.updateUser(id, data)
       res.status(200).json(userToUpdate)
-    } catch (error) {
-      res.status(500).json({ ok: false, message: 'Internal server error' })
+    } catch (error: any) {
+      res.status(500).json({ ok: false, message: 'Internal server error', error: error.message })
     }
   },
   deleteUser: async (req: Request, res: Response) => {
     try {
       const { id } = req.params
       const userToDelete = await userServices.deleteUser(id)
-      res.status(200).json(userToDelete)
-    } catch (error) {
-      res.status(500).json({ ok: false, message: 'Internal server error' })
+      res.status(200).json("User has been deleted")
+    } catch (error: any) {
+      res.status(500).json({ ok: false, message: 'Internal server error', error: error.message })
     }
   },
 }

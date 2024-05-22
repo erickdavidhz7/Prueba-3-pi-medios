@@ -31,11 +31,9 @@ export const uniqueDocumentValidator = async (
     const { document } = req.body
     const existingDocument = await Users.findOne({ where: { document } })
     if (existingDocument)
-      return res.status(400).json({
-        errors: {
-          email: ['Email already in use'],
-        },
-      })
+      return res
+        .status(400)
+        .json({ ok: false, message: 'Document already exists in our system' })
     next()
   } catch (error) {
     console.error(
@@ -51,9 +49,11 @@ export const checkAdminRole = async (
   next: NextFunction
 ) => {
   try {
-    const userRole = req.headers.Auth
+    const userRole = req.headers.auth
     if (userRole != RolesId.admin)
-      return res.status(400).json('You are not authorized')
+      return res
+        .status(401)
+        .json({ ok: false, message: 'You are not authorized' })
     next()
   } catch (error) {
     console.error(
@@ -69,9 +69,11 @@ export const checkEmployeeRole = async (
   next: NextFunction
 ) => {
   try {
-    const userRole = req.headers.Auth
+    const userRole = req.headers.auth
     if (userRole != RolesId.employee)
-      return res.status(400).json('You are not authorized')
+      return res
+        .status(401)
+        .json({ ok: false, message: 'You are not authorized' })
     next()
   } catch (error) {
     console.error(
@@ -87,9 +89,11 @@ export const checkEveryoneRole = async (
   next: NextFunction
 ) => {
   try {
-    const userRole = req.headers.Auth
+    const userRole = req.headers.auth
     if (userRole != RolesId.everyone)
-      return res.status(400).json('You are not authorized')
+      return res
+        .status(401)
+        .json({ ok: false, message: 'You are not authorized' })
     next()
   } catch (error) {
     console.error(

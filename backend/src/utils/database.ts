@@ -17,8 +17,8 @@ export const initDb = () => {
     .catch((err) => {
       console.log(err)
     })
-
-  db.sync({ alter: true })
+  // change alter to true when doing changes to models
+  db.sync({ alter: false })
     .then(() => {
       console.log('Database Synced')
     })
