@@ -50,3 +50,4 @@ const ProductControllers = {
     }
   }
 }
+export default ProductControllers
