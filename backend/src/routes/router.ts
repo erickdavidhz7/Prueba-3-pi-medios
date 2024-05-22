@@ -1,6 +1,11 @@
-import express, { Request, Response} from 'express'
+import express, { Request, Response } from 'express'
+import usersRoutes from './user.routes'
+import authRoutes from './auth.routes'
+import roleRoutes from './role.routes'
+import productRoutes from './product.routes'
+import saleRoutes from './sale.routes'
 
-const mainRouter = express.Router();
+const mainRouter = express.Router()
 
 mainRouter.get('/', (_req: Request, res: Response) => {
   res.status(200).send(`
@@ -11,5 +16,11 @@ mainRouter.get('/', (_req: Request, res: Response) => {
   <P>Architecture Defined</p>
  `)
 })
+
+mainRouter.use('/auth', authRoutes)
+mainRouter.use('/users', usersRoutes)
+mainRouter.use('/roles', roleRoutes)
+mainRouter.use('/products', productRoutes)
+mainRouter.use('/sales', saleRoutes)
 
 export default mainRouter
