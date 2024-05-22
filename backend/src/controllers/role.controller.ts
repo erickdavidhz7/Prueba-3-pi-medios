@@ -13,7 +13,7 @@ const RoleControllers = {
       })
       if (validateRole) return res.status(400).json({ok: false, message: `The role: ${role} is already in our system.`})
       await roleServices.CreateRole(role)
-      return res.status(200).json({ok: true, message: `The role: ${role} has been added succesfully`})
+      return res.status(201).json({ok: true, message: `The role: ${role} has been added succesfully`})
     } catch (error) {
       res.status(500).json({ ok: false, message: 'Internal server error', error: getErrorMessage(error) })
     }

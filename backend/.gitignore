@@ -1,6 +1,6 @@
 postgres/
 pgadmin/
-
+database.sqlite
 # Logs
 logs
 *.log

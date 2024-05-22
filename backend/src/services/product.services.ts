@@ -38,6 +38,7 @@ const productServices = {
       const productToUpdate = await Products.findByPk(id)
       if (!productToUpdate) throw new Error('Error searching the product')
       productToUpdate.update(data)
+      return productToUpdate
     } catch (error) {
       throw error
     }

@@ -5,7 +5,7 @@ import {checkAdminRole } from '../middlewares/auth.middlewares'
 const router = express.Router()
 
 router.get('/', SaleControllers.getAllSales)
-router.get('/:id', [checkAdminRole], SaleControllers.findSaleById)
+router.get('/:id', SaleControllers.findSaleById)
 router.get('/total/day', [checkAdminRole], SaleControllers.getTotalSalesOfDay)
 router.get('/total/month', [checkAdminRole], SaleControllers.getTotalSalesOfMonth)
 router.post('/', SaleControllers.createSale)

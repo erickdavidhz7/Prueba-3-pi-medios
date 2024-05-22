@@ -65,7 +65,7 @@ const SaleControllers = {
       if(!date) res.status(400).send('Date query parameter is required')
       const sales = await saleServices.getAllSalesOfDay(date) as unknown as SaleI[]
       const totalSales = await saleServices.getTotalSales(sales)
-      res.status(200).json({ok: true, message: `Total sales of ${date} are: ${totalSales}`})
+      res.status(200).json({ok: true, message: `Total sales of ${date} are: ${totalSales}`, total: totalSales})
     } catch (error) {
       res.status(500).json({ ok: false, message: 'Internal server error', error: getErrorMessage(error) })
     }
@@ -77,7 +77,7 @@ const SaleControllers = {
       if(!date) res.status(400).send('Date query parameter is required')
       const sales = await saleServices.getAllSalesOfMonth(date) as unknown as SaleI[]
       const totalSales = await saleServices.getTotalSales(sales)
-      res.status(200).json({ok: true, message: `Total sales of ${month} ${year} are: ${totalSales}`})
+      res.status(200).json({ok: true, message: `Total sales of ${month} ${year} are: ${totalSales}`, total: totalSales})
     } catch (error) {
       res.status(500).json({ ok: false, message: 'Internal server error', error: getErrorMessage(error) })
     }

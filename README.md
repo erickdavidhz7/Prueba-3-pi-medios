@@ -14,7 +14,8 @@
 3. **Run the server with npm run dev (development) or npm start (production)**
 
 ## APIDOCS
+1. **All the respective documentation it is on the api-docs endpoint done with swaggerui**
 
 | TYPE   | DETAIL         | ROUTE                                  | SEND                                                              |
 | ------ | -------------- | -------------------------------------- | ----------------------------------------------------------------- |
-| GET    | TEMP           | http://localhost:PORT/TEMP             | TEMP                                                              |
+| GET    | DOCUMENTATION  | http://localhost:PORT/api-docs         |                                                               |

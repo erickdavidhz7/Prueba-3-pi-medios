@@ -7,7 +7,7 @@ const ProductControllers = {
   createProduct: async (req: Request, res: Response) => {
     try {
       const productData = req.body as unknown as ProductI
-      const newProduct = productServices.createProduct(productData)
+      const newProduct = await productServices.createProduct(productData)
       res.status(201).json(newProduct)
     } catch (error) {
       res.status(500).json({ ok: false, message: 'Internal server error', error: getErrorMessage(error) })
