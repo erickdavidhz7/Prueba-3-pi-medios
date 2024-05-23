@@ -29,9 +29,10 @@
 4. **PASSWORD=ADMIN_DANIELA_STORE_123**
 
 # ALERT! 
-# KNOWN BUG
+# KNOWN BUGS
 1. **Sometimes when running the server for the first time it doesn't preload the corresponding data of the json a seed route has been created for this reason besides using the seed route the best solution is just restarting the server**
 2. **seed route is:**
+2. **sometimes seed has to be used multiple times**
    
 | TYPE   | DETAIL         | ROUTE                                  |
 | ------ | -------------- | -------------------------------------- | 
