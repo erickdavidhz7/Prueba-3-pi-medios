@@ -47,6 +47,7 @@ export const uniqueDocumentValidator = async (
       'There was an error trying to verify the authenticity of the user: ' +
         error
     )
+    return res.status(404).json({ok: false, message: "Unable to validate document in our system"})
   }
 }
 
@@ -68,6 +69,7 @@ export const checkAdminRole = async (
       'There was an error trying to verify the authenticity of the user: ' +
         error
     )
+    return res.status(404).json({ok: false, message: "Unable to authenticate user's id"})
   }
 }
 
@@ -89,6 +91,7 @@ export const checkEmployeeRole = async (
       'There was an error trying to verify the authenticity of the user: ' +
         error
     )
+    return res.status(404).json({ok: false, message: "Unable to authenticate user's id"})
   }
 }
 
@@ -110,5 +113,6 @@ export const checkEveryoneRole = async (
       'There was an error trying to verify the authenticity of the user: ' +
         error
     )
+    return res.status(404).json({ok: false, message: "Unable to authenticate user's id"})
   }
 }
