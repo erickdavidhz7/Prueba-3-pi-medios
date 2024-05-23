@@ -1,0 +1,1046 @@
+{
+  "openapi": "3.1.0",
+  "info": { "title": "Daniela Store Site", "version": "1.0.0" },
+  "servers": [
+    {
+      "url": "http://localhost:3001",
+      "description": "Local host API server"
+    }
+  ],
+  "tags": [
+    { "name": "Auth" },
+    { "name": "Users" },
+    { "name": "Roles" },
+    { "name": "Products" },
+    { "name": "Sales" }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Register an user",
+        "requestBody": {
+          "description": "Create a new user.",
+          "content": {
+            "multipart/form-data": {
+              "schema": { "$ref": "#/components/schemas/UserRegister" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "User data.",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "A JSON with two properties ok and message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User sign in",
+        "requestBody": {
+          "description": "User signing in",
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UserLogin" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in and token.",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Returns a list of all users (ADMIN ONLY)",
+        "security": [
+          {
+            "AdminAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A JSON array of users."
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{document}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "document",
+          "schema": { "type": "string" },
+          "required": true
+        }
+      ],
+      "get": {
+        "tags": ["Users"],
+        "summary": "Returns an user with the data.",
+        "responses": {
+          "200": {
+            "description": "JSON of an user",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": { "type": "string" },
+          "required": true
+        }
+      ],
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Updating an user",
+        "requestBody": {
+          "description": "Updates the information from an user.",
+          "content": {
+            "aplication/json": {
+              "schema": { "$ref": "#/components/schemas/UserUpdate" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "JSON of an user",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Deletes an user (ADMIN ONLY)",
+        "security": [
+          {
+            "AdminAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A JSON with two properties ok and message",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/roles": {
+      "get": {
+        "tags": ["Roles"],
+        "summary": "Get all roles (ADMIN ONLY)",
+        "security": [
+          {
+            "AdminAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "A JSON array of roles"
+          },
+          "401": {
+            "description": "A JSON with two properties ok and message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+
+      },
+      "post": {
+        "tags": ["Roles"],
+        "summary": "Creates a role (ADMIN ONLY)",
+        "security": [
+          {
+            "AdminAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Create a new role.",
+          "content": {
+            "multipart/form-data": {
+              "schema": { "$ref": "#/components/schemas/UserRegister" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Role has been added succesfully",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "A JSON with two properties ok and message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/roles/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": { "type": "string" },
+          "required": true
+        }
+      ],
+      "patch": {
+        "tags": ["Roles"],
+        "summary": "Change an user's role (ADMIN ONLY)",
+        "security": [
+          {
+            "AdminAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Change user's role",
+          "content": {
+            "multipart/form-data": {
+              "schema": { "$ref": "#/components/schemas/RoleUpdate" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Role has been added succesfully",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "A JSON with two properties ok and message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "List all products",
+        "requestBody": {
+          "description": "List all products"
+        },
+        "responses": {
+          "201": {
+            "description": "A JSON array of products"
+          },
+          "401": {
+            "description": "A JSON with two properties ok and message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Products"],
+        "summary": "Create a new product (ADMIN ONLY)",
+        "security": [
+          {
+            "AdminAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Create a new product",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "A json of product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "A JSON with two properties ok and message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": { "type": "string" },
+          "required": true
+        }
+      ],
+      "patch": {
+        "tags": ["Products"],
+        "summary": "Update a product",
+        "security": [
+          {
+            "AdminAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Update a product",
+          "content": {
+            "multipart/form-data": {
+              "schema": { "$ref": "#/components/schemas/Product" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "A json of a product",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "A JSON with two properties ok and message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Products"],
+        "summary": "Return an specific product",
+        "requestBody": {
+          "description": "Returns a product"
+        },
+        "responses":{
+          "201": {
+            "description": "A json of the product updated",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "A JSON with two properties ok and message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sales": {
+      "get": {
+        "tags": ["Sales"],
+        "summary": "List all sales",
+        "requestBody": {
+          "description": "List all sales"
+        },
+        "responses": {
+          "201": {
+            "description": "A JSON array of sales"
+          },
+          "401": {
+            "description": "A JSON with two properties ok and message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Sales"],
+        "summary": "Create a new sale",
+        "requestBody": {
+          "description": "Create a new sale",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Sale"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "A json of a sale",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaleResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "A JSON with two properties ok and message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sales/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": { "type": "string" },
+          "required": true
+        }
+      ],
+      "get": {
+        "tags": ["Sales"],
+        "summary": "Returns an specific sale",
+        "requestBody": {
+          "description": "Returns an specific sale"
+        },
+        "responses": {
+          "201": {
+            "description": "A json of a sale",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaleResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "A JSON with two properties ok and message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Sales"],
+        "summary": "Updates a sale",
+        "security": [
+          {
+            "AdminAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Updates a sale",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Sale"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "A json of a sale",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaleResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "A JSON with two properties ok and message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Sales"],
+        "summary": "Deletes a sale (ADMIN ONLY)",
+        "security": [
+          {
+            "AdminAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "A json of a sale",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaleResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "A JSON with two properties ok and message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sales/day": {
+      "parameters": [
+        {
+          "in": "query",
+          "name": "date",
+          "schema": { "type": "string" },
+          "required": true,
+          "example": "5/22/2024"
+        }
+      ],
+      "get": {
+        "tags": ["Sales"],
+        "summary": "Returns total sales of an specific day (ADMIN ONLY)",
+        "security": [
+          {
+            "AdminAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "A JSON with two properties ok and message"
+        },
+        "responses": {
+          "201": {
+            "description": "A json ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TotalSalesGeneralResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "A JSON with two properties ok and message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sales/month": {
+      "parameters": [
+        {
+          "in": "query",
+          "name": "date",
+          "schema": { "type": "string" },
+          "required": true,
+          "example": "5/22/2024"
+        }
+      ],
+      "get": {
+        "tags": ["Sales"],
+        "summary": "Returns total sales of an specific month (ADMIN ONLY)",
+        "security": [
+          {
+            "AdminAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "A JSON with two properties ok and message"
+        },
+        "responses": {
+          "201": {
+            "description": "A json ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TotalSalesGeneralResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "A JSON with two properties ok and message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+  },
+  "components": {
+    "securitySchemes": {
+      "AdminAuth": {
+        "type": "apiKey",
+        "name": "Auth",
+        "in": "header",
+        "description": "Authorization header with admin user ID"
+      }
+    },
+    "schemas": {
+      "ResponseMessage": {
+        "Type": "object",
+        "properties": {
+          "ok": { "type": "boolean", "example": "false" },
+          "message": { "type": "string", "example": "general message" }
+        }
+      },
+      "GeneralResponseError": {
+        "Type": "object",
+        "properties": {
+          "ok": { "type": "boolean", "example": "false" },
+          "message": { "type": "string", "example": "general message" },
+          "error": { "type": "string", "example": "error message" }
+        }
+      },
+      "UserLogin": {
+        "required": ["document", "password"],
+        "type": "object",
+        "properties": {
+          "document": { "type": "string", "example": "12345678" },
+          "password": { "type": "string", "example": "password" }
+        }
+      },
+      "UserRegister": {
+        "required": ["document", "last_name", "name", "password"],
+        "type": "object",
+        "properties": {
+          "document": { "type": "string", "example": "12345678" },
+          "last_name": { "type": "string", "example": "Picapiedras" },
+          "name": { "type": "string", "example": "Pedro" },
+          "password": { "type": "string", "example": "password" }
+        }
+      },
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "document": { "type": "string", "example": "12345678" },
+          "id": {
+            "type": "string",
+            "example": "9e7bd8a8-7045-4a52-b4f2-7b467229cbe9"
+          },
+          "last_name": { "type": "string", "example": "Picapiedras" },
+          "name": { "type": "string", "example": "Pedro" },
+          "password": { "type": "string", "example": "password_encrypted" },
+          "roles_id": {
+            "type": "string",
+            "example": "1c9f38a5-1c4f-4028-b3fa-890e9b3b0fe7"
+          }
+        }
+      },
+      "UserUpdate": {
+        "type": "object",
+        "properties": {
+          "document": { "type": "string", "example": "12345678" },
+          "last_name": { "type": "string", "example": "Picapiedras" },
+          "name": { "type": "string", "example": "Pedro" },
+          "password": { "type": "string", "example": "password_encrypted" }
+        }
+      },
+      "RoleReponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "0e16a149-7887-4367-970d-a744187bfd41"
+          },
+          "name": { "type": "string", "example": "everyone" }
+        }
+      },
+      "RoleUpdate": {
+        "required": ["name"],
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "example": "everyone" }
+        }
+      },
+      "ProductResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "bc67365b-55ee-4e63-a973-19cce4f598bb"
+          },
+          "description": { "type": "string", "example": "350g" },
+          "name": { "type": "string", "example": "pizza congelada" },
+          "price": { "type": "string", "example": "5000" }
+        }
+      },
+      "Product": {
+        "type": "object",
+        "required": ["name", "price", "description"],
+        "properties": {
+          "description": { "type": "string", "example": "350g" },
+          "name": { "type": "string", "example": "pizza congelada" },
+          "price": { "type": "string", "example": "5000" }
+        }
+      },
+      "Sale": {
+        "type": "object",
+        "required": ["qty", "product_id", "users_id"],
+        "properties": {
+          "qty": { "type": "string", "example": "5" },
+          "products_id": { "type": "string", "example": "bc67365b-55ee-4e63-a973-19cce4f598bb" },
+          "users_id": { "type": "string", "example": "9e7bd8a8-7045-4a52-b4f2-7b467229cbe9" }
+        }
+      },
+      "SaleResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "bc67365b-55ee-4e63-a973-19cce4f598bb"
+          },
+          "qty": { "type": "string", "example": "5" },
+          "products_id": { "type": "string", "example": "bc67365b-55ee-4e63-a973-19cce4f598bb" },
+          "users_id": { "type": "string", "example": "9e7bd8a8-7045-4a52-b4f2-7b467229cbe9" },
+          "sale_at": {"type": "string", "example": "2024-04-14"}
+        }
+      },
+      "TotalSalesGeneralResponse": {
+        "Type": "object",
+        "properties": {
+          "ok": { "type": "boolean", "example": "true" },
+          "message": { "type": "string", "example": "Total sales of April are: 1000" },
+          "total": { "type": "number", "example": "1000" }
+        }
+      }
+    }
+  }
+}
