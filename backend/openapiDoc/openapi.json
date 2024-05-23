@@ -238,6 +238,41 @@
       }
     },
     "/roles": {
+      "get": {
+        "tags": ["Roles"],
+        "summary": "Get all roles (ADMIN ONLY)",
+        "security": [
+          {
+            "AdminAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "A JSON array of roles"
+          },
+          "401": {
+            "description": "A JSON with two properties ok and message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "A JSON with three properties ok, message and error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralResponseError"
+                }
+              }
+            }
+          }
+        }
+
+      },
       "post": {
         "tags": ["Roles"],
         "summary": "Creates a role (ADMIN ONLY)",
@@ -981,7 +1016,7 @@
         "required": ["qty", "product_id", "users_id"],
         "properties": {
           "qty": { "type": "string", "example": "5" },
-          "product_id": { "type": "string", "example": "bc67365b-55ee-4e63-a973-19cce4f598bb" },
+          "products_id": { "type": "string", "example": "bc67365b-55ee-4e63-a973-19cce4f598bb" },
           "users_id": { "type": "string", "example": "9e7bd8a8-7045-4a52-b4f2-7b467229cbe9" }
         }
       },
@@ -993,7 +1028,7 @@
             "example": "bc67365b-55ee-4e63-a973-19cce4f598bb"
           },
           "qty": { "type": "string", "example": "5" },
-          "product_id": { "type": "string", "example": "bc67365b-55ee-4e63-a973-19cce4f598bb" },
+          "products_id": { "type": "string", "example": "bc67365b-55ee-4e63-a973-19cce4f598bb" },
           "users_id": { "type": "string", "example": "9e7bd8a8-7045-4a52-b4f2-7b467229cbe9" },
           "sale_at": {"type": "string", "example": "2024-04-14"}
         }

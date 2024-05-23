@@ -6,7 +6,7 @@ dotenv.config()
 export const corsOptions: CorsOptions = {
   origin: '*',
   credentials: true,
-  allowedHeaders: ['Origin, X-Requested-With, Content-Type, Accept'],
+  allowedHeaders: ['Origin, X-Requested-With, Content-Type, Accept, Auth'],
   methods: ['GET, POST, OPTIONS, PUT, DELETE, PATCH'],
 }
 
@@ -41,10 +41,12 @@ export enum RolesId {
 }
 
 export const adminData = {
-  id: "90ca5dfb-8038-4c40-b911-2c11141d258a",
+  id: '90ca5dfb-8038-4c40-b911-2c11141d258a',
   document: 'ADMIN',
   last_name: 'ADMIN',
   name: 'ADMIN',
   password: 'ADMIN_DANIELA_STORE_123',
   roles_id: '1c9f38a5-1c4f-4028-b3fa-890e9b3b0fe7',
 }
+
+export const ADMIN_PASSWORD = 'ADMIN_DANIELA_STORE_123'
