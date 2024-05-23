@@ -6,8 +6,8 @@ import routes from './routes/router'
 import { corsOptions, envs } from './utils/constants'
 import { initDb } from './utils/database'
 import { initModels } from './models/initModels'
-import preLoadData from './utils/preloadData'
 import openApiSpec from '../openapiDoc/openapi.json'
+import preLoadData from './utils/preloadData'
 
 const app = express()
 
@@ -16,9 +16,9 @@ app.use(cors(corsOptions))
 
 initDb()
 initModels()
-preLoadData.preloadDataAdmin()
+// there is a bug that sometimes it doesn't preload the data from the json to the database
+// when that happens the best is to restart the server or use seed
 preLoadData.preloadDataProducts()
-preLoadData.preloadDataRoles()
 
 app.use('/', routes)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiSpec))

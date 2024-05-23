@@ -4,6 +4,7 @@ import authRoutes from './auth.routes'
 import roleRoutes from './role.routes'
 import productRoutes from './product.routes'
 import saleRoutes from './sale.routes'
+import seedRoutes from './seed.routes'
 
 const mainRouter = express.Router()
 
@@ -22,5 +23,6 @@ mainRouter.use('/users', usersRoutes)
 mainRouter.use('/roles', roleRoutes)
 mainRouter.use('/products', productRoutes)
 mainRouter.use('/sales', saleRoutes)
+mainRouter.use('/seed', seedRoutes)
 
 export default mainRouter

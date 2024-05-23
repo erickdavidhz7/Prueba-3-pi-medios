@@ -22,7 +22,7 @@ const preLoadData = {
       await Products.bulkCreate(products)
       console.log('Database has loaded the data of products succesfully')
     } catch (error) {
-      console.log('Data of products is already inside the database')
+      console.error(`There is an error: ${error}`)
     }
   },
   preloadDataRoles: async () => {
@@ -39,7 +39,7 @@ const preLoadData = {
       await Roles.bulkCreate(rolesArray)
       console.log('Database has loaded the data of roles succesfully')
     } catch (error) {
-      console.log('Data of roles is already inside the database')
+      console.error(`There is an error: ${error}`)
     }
   },
 
@@ -54,7 +54,7 @@ const preLoadData = {
       await Users.bulkCreate([adminData])
       console.log('Database has loaded the data of an admin succesfully')
     } catch (error) {
-      console.log('Data of admin is already inside the database')
+      console.error(`There is an error: ${error}`)
     }
   },
 }
