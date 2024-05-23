@@ -27,3 +27,11 @@
 2. **Run the server with npm run dev (development), the admin user and password are always going to be the following:**
 3. **USERNAME=ADMIN**
 4. **PASSWORD=ADMIN_DANIELA_STORE_123**
+
+# ALERT! 
+# KNOWN BUG
+1. **Sometimes when running the server for the first time it doesn't preload the corresponding data of the json a seed route has been created for this reason besides using the seed route the best solution is just restarting the server**
+2. **seed route is:**
+| TYPE   | DETAIL         | ROUTE                                  |
+| ------ | -------------- | -------------------------------------- | 
+| GET    | SEED           | http://localhost:PORT/seed             |
