@@ -25,4 +25,5 @@
 # FRONT END TESTING
 1. **Install the dependencies with npm i**
 2. **Run the server with npm run dev (development), the admin user and password are always going to be the following:**
-**DOCUMENT= ADMIN  PASSWORD= ADMIN_DANIELA_STORE_123 **
+3. **DOCUMENT=ADMIN**
+4. **PASSWORD=ADMIN_DANIELA_STORE_123**
